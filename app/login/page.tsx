@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthShell, {
   authInputClass,
@@ -12,17 +12,32 @@ import AuthShell, {
 } from "@/components/auth-shell";
 
 export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [hideSuccessMessage, setHideSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
+  const successMessage =
+    !hideSuccessMessage && searchParams.get("reset") === "success"
+      ? "Password updated successfully. Please log in."
+      : "";
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setErrorMessage("");
+    setHideSuccessMessage(true);
     setLoading(true);
 
     const supabase = createClient();
@@ -109,6 +124,14 @@ export default function LoginPage() {
               className={`${authMessageClass} border-[#f0c6c0] bg-[#fff4f2] text-[#B42318]`}
             >
               {errorMessage}
+            </p>
+          )}
+
+          {successMessage && (
+            <p
+              className={`${authMessageClass} border-[#cdd9c8] bg-[#f2f6ef] text-[#4D6847]`}
+            >
+              {successMessage}
             </p>
           )}
 

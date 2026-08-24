@@ -71,7 +71,7 @@ export default function ResetPasswordForm() {
               htmlFor="password"
               className="mb-2 block text-[13px] font-semibold uppercase text-[#555]"
             >
-              MẬT KHẨU MỚI
+              New password
             </label>
 
             <input
@@ -81,7 +81,7 @@ export default function ResetPasswordForm() {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="Nhập mật khẩu mới"
+              placeholder="Enter a new password"
               className={authInputClass}
             />
           </div>
@@ -91,7 +91,7 @@ export default function ResetPasswordForm() {
               htmlFor="confirmPassword"
               className="mb-2 block text-[13px] font-semibold uppercase text-[#555]"
             >
-              NHẬP LẠI MẬT KHẨU
+              Confirm password
             </label>
 
             <input
@@ -101,7 +101,7 @@ export default function ResetPasswordForm() {
               required
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
-              placeholder="Nhập lại mật khẩu mới"
+              placeholder="Confirm your new password"
               className={authInputClass}
             />
           </div>
@@ -117,7 +117,7 @@ export default function ResetPasswordForm() {
             disabled={loading}
             className={authPrimaryButtonClass}
           >
-            {loading ? "ĐANG CẬP NHẬT..." : "ĐỔI MẬT KHẨU"}
+            {loading ? "UPDATING..." : "Update password"}
           </button>
         </form>
     </AuthShell>
