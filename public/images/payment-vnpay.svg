@@ -1,0 +1,8 @@
+<svg width="160" height="52" viewBox="0 0 160 52" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VNPAY">
+  <rect width="160" height="52" fill="white"/>
+  <path d="M25.7 13.4L42.3 26L25.7 38.6L9.1 26L25.7 13.4Z" fill="#E6222E"/>
+  <path d="M43.3 13.4L59.9 26L43.3 38.6L26.7 26L43.3 13.4Z" fill="#006CB8"/>
+  <path d="M34.5 19.7L42.3 26L34.5 32.3L26.7 26L34.5 19.7Z" fill="white"/>
+  <text x="68" y="25" fill="#006CB8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800">VNPAY</text>
+  <text x="69" y="37" fill="#E6222E" font-family="Arial, Helvetica, sans-serif" font-size="8" font-weight="700">QR PAY</text>
+</svg>

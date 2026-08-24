@@ -1,0 +1,8 @@
+<svg width="120" height="48" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="American Express">
+  <rect width="120" height="48" fill="white"/>
+  <rect x="30" y="10" width="60" height="28" rx="3" fill="#2E77BC"/>
+  <path d="M38.5 29L42.7 19H46.4L50.6 29H47.5L46.8 27.1H42.2L41.5 29H38.5ZM43 24.8H46L44.5 20.9L43 24.8Z" fill="white"/>
+  <path d="M51.7 29V19H56.2L58.5 25.4L60.8 19H65.3V29H62.5V22.1L59.9 29H57.1L54.5 22.1V29H51.7Z" fill="white"/>
+  <path d="M67 29V19H76.3V21.3H69.9V22.8H75.9V25H69.9V26.7H76.4V29H67Z" fill="white"/>
+  <path d="M77.4 29L81 24L77.6 19H81L82.9 22L84.8 19H88.1L84.7 23.9L88.4 29H85L82.8 25.7L80.7 29H77.4Z" fill="white"/>
+</svg>
