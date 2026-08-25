@@ -160,14 +160,13 @@ export default function AboutPage() {
         </Reveal>
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {styles.map((style, index) => (
+          {styles.map((style) => (
             <Link
               key={style.name}
               href={style.href}
               className="group overflow-hidden rounded-[8px] bg-white"
             >
-              <Reveal variant="image-mask" delay={index * 80} className="aspect-[4/3] overflow-hidden bg-[#e6e4dc]">
-                <Reveal variant="parallax" desktopOnly className="h-full">
+              <div className="aspect-[4/3] overflow-hidden bg-[#e6e4dc]">
                 <Image
                   src={style.image}
                   alt={style.name}
@@ -175,8 +174,7 @@ export default function AboutPage() {
                   height={570}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                 />
-                </Reveal>
-              </Reveal>
+              </div>
               <div className="p-5">
                 <h3 className="text-2xl font-semibold">{style.name}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#66665f]">
