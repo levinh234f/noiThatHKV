@@ -20,7 +20,6 @@ const drawerItems = [
   { label: "Phong Cách Hiện Đại", href: "/products/hien-dai" },
   { label: "Phong Cách Tân Cổ Điển", href: "/products/tan-co-dien" },
   { label: "Phong Cách Đông Dương", href: "/products/dong-duong" },
-  { label: "TÌM CỬA HÀNG >>", href: "/contact", accent: true, hideArrow: true },
   { label: "Giảm giá đặc biệt", href: "/#discounted-products" },
   { label: "Bộ sưu tập", href: "/#bo-suu-tap" },
   { label: "Về HKV", href: "/about" },
