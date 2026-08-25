@@ -149,6 +149,20 @@ export default function SiteHeader({
           : "border-b border-black/10 bg-white text-[#111] shadow-[0_1px_12px_rgba(0,0,0,0.06)]"
       }`}
     >
+      <Link
+        href="/"
+        aria-label={isHydrated ? "Trang chủ HKV" : undefined}
+        className="absolute left-1/2 top-0 z-10 flex h-[74px] -translate-x-1/2 items-center lg:hidden"
+      >
+        <img
+          src="/images/logo-hkv.png"
+          alt="HKV"
+          className={`size-[68px] translate-x-px object-contain transition duration-300 ${
+            isTransparent ? "brightness-0 invert" : ""
+          }`}
+        />
+      </Link>
+
       <div className="flex min-h-[74px] w-full items-center justify-between gap-4 px-4 sm:px-6 lg:min-h-[90px] lg:px-10">
         <div className="flex min-w-0 items-center gap-2">
           <button
@@ -169,7 +183,7 @@ export default function SiteHeader({
             />
           </button>
 
-          <Link href="/" aria-label={isHydrated ? "Trang chủ HKV" : undefined} className="shrink-0">
+          <Link href="/" aria-label={isHydrated ? "Trang chủ HKV" : undefined} className="hidden shrink-0 lg:block">
             <img
               src="/images/logo-hkv.png"
               alt="HKV"

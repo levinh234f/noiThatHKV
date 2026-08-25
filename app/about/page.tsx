@@ -218,7 +218,7 @@ export default function AboutPage() {
         <Reveal className="grid overflow-hidden rounded-[8px] bg-[#6b7d65] text-white lg:grid-cols-[1fr_0.82fr]">
           <div className="p-7 sm:p-10 lg:p-14">
             <p className="text-xs uppercase tracking-[0.22em] text-white/70">
-              HKV Collections
+              Bộ sưu tập HKV
             </p>
             <h2 className="mt-4 max-w-[620px] text-[30px] font-semibold leading-tight sm:text-[44px]">
               Khám phá các bộ sưu tập nội thất HKV.

@@ -52,10 +52,15 @@ function matchesType(name: string, type: ProductType) {
   return value.includes("tu") || value.includes("ke");
 }
 
-function styleBadge(name: string) {
-  const value = normalize(name);
-  if (value.includes("dong duong") || value.includes("may")) return ["Đông Dương", "bg-[#5e7259]"];
-  if (value.includes("tan co dien") || value.includes("victoria")) return ["Tân Cổ Điển", "bg-[#c59c54]"];
+function collectionBadge(slug: string) {
+  if (slug.endsWith("-dong-duong") || slug === "giuong-ngu-hkv") {
+    return ["Đông Dương", "bg-[#5e7259]"];
+  }
+
+  if (slug.endsWith("-tan-co-dien")) {
+    return ["Tân Cổ Điển", "bg-[#c59c54]"];
+  }
+
   return ["Hiện Đại", "bg-[#857868]"];
 }
 
@@ -107,7 +112,7 @@ function ProductsContent() {
   function toCard(product: Product): ProductCardData {
     const images = [...(product.product_images ?? [])].sort((a, b) => Number(Boolean(b.is_primary)) - Number(Boolean(a.is_primary)) || Number(a.sort_order ?? 0) - Number(b.sort_order ?? 0));
     const hasSale = product.sale_price !== null && Number(product.sale_price) < Number(product.price);
-    const [badge, badgeClassName] = hasSale ? ["Giảm giá", "bg-[#b42318]"] : styleBadge(product.name);
+    const [badge, badgeClassName] = collectionBadge(product.slug);
     return {
       id: product.id, name: product.name, slug: product.slug, description: product.short_description || product.material,
       price: Number(hasSale ? product.sale_price : product.price), oldPrice: hasSale ? Number(product.price) : null,

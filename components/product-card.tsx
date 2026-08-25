@@ -25,7 +25,6 @@ export default function ProductCard({ product }: { product: ProductCardData }) {
     <>
       <div className="relative aspect-[4/3] overflow-hidden rounded-t-[15px] bg-[#ebeae6]">
         <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-        <span className="absolute right-3 top-3 flex size-8 items-center justify-center rounded-full bg-white/85 text-lg text-[#6b7d65] shadow-sm" aria-hidden="true">♡</span>
       </div>
       <div className="min-h-[132px] p-4 pr-12">
         {product.badge && <span className={`inline-flex rounded-full px-3 py-1 text-[10px] text-white ${product.badgeClassName ?? "bg-[#6b7d65]"}`}>{product.badge}</span>}
