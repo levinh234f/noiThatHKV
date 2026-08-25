@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import MobileStyleArticlePage from "@/app/articles/mobile-style-article-page";
 import ResponsiveCanvas from "@/components/responsive-canvas";
+import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
 
 const features = [
@@ -171,6 +173,79 @@ export default function TanCoDienArticlePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#F6F6F6] text-[#0A0A0A]">
       <SiteHeader />
+      <div className="xl:hidden">
+        <MobileStyleArticlePage
+          active="tan-co-dien"
+          badge="PHONG CÁCH TÂN CỔ ĐIỂN"
+          introTitle={
+            <>
+              Sang trọng vượt thời gian,
+              <br />
+              tinh tế từng đường nét
+            </>
+          }
+          intro={
+            <>
+              <p>
+                Phong cách <strong>Tân Cổ Điển</strong> là sự giao thoa tinh tế giữa vẻ đẹp cổ điển châu Âu và sự tiện nghi của cuộc sống hiện đại. Lấy cảm hứng từ kiến trúc Baroque và Neoclassicism thế kỷ 18–19, phong cách này giữ lại ngôn ngữ trang trí sang trọng — phào chỉ chạm khắc, đèn chùm pha lê, gương mạ vàng — nhưng được diễn giải lại bằng vật liệu và kỹ thuật hiện đại.
+              </p>
+              <p>
+                Bảng màu chủ đạo xoay quanh các tông <strong>kem, be, vàng gold và trắng ngà</strong>, tạo ra không gian ấm áp, bề thế nhưng không kém phần tinh tế. Đây là lựa chọn hoàn hảo cho những ai muốn ngôi nhà của mình toát lên khí chất quý phái và đẳng cấp vượt thời gian.
+              </p>
+            </>
+          }
+          features={features}
+          tags={tags}
+          heroImage="/images/article-tan-co-dien-hero.png"
+          heroAlt="Phong cách Tân Cổ Điển"
+          stats={[
+            ["120+", "Dự án TCD"],
+            ["98%", "Hài lòng"],
+            ["8+", "Năm KN"],
+          ]}
+          gallery={[
+            {
+              title: "Phòng khách Tân Cổ Điển",
+              label: "Phòng Khách",
+              image: "/images/article-tan-co-dien-living-room.png",
+              alt: "Phòng khách Tân Cổ Điển",
+              description: "Chandelier vàng · Sofa chạm khắc · Ốp tường phào chỉ",
+            },
+            {
+              title: "Phòng ngủ Master",
+              label: "Phòng Ngủ",
+              image: "/images/article-tan-co-dien-bedroom.png",
+              alt: "Phòng ngủ Master",
+              description: "Giường tufted · Ốp tường vàng",
+            },
+            {
+              title: "Phòng ăn Tân Cổ Điển",
+              label: "Phòng Ăn",
+              image: "/images/article-tan-co-dien-hero.png",
+              alt: "Phòng ăn Tân Cổ Điển",
+              description: "Bàn tròn · Chandelier pha lê",
+            },
+            {
+              title: "Bếp Tân Cổ Điển",
+              label: "Nhà Bếp",
+              image: "/images/article-tan-co-dien-kitchen.png",
+              alt: "Bếp Tân Cổ Điển",
+              description: "Tủ bếp cổ điển · Đảo bếp",
+            },
+            {
+              title: "Phòng tắm Luxury",
+              label: "Phòng Tắm",
+              image: "/images/article-tan-co-dien-bathroom.png",
+              alt: "Phòng tắm Luxury",
+              description: "Bồn tắm · Gương mạ vàng",
+            },
+          ]}
+          ctaLabel="Xem toàn bộ dự án Tân Cổ Điển"
+          productHref="/products/tan-co-dien"
+        />
+        <SiteFooter />
+      </div>
+      <div className="hidden xl:block">
       <ResponsiveCanvas designHeight={2779}>
       <div className="relative mx-auto h-[2779px] w-[1440px] bg-[#F6F6F6]">
         <section className="absolute left-[131px] top-[87px] h-[1115px] w-[1177px] px-[24px] pt-[21px]">
@@ -511,6 +586,7 @@ export default function TanCoDienArticlePage() {
         </footer>
       </div>
       </ResponsiveCanvas>
+      </div>
     </main>
   );
 }

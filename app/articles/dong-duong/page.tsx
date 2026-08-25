@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import MobileStyleArticlePage from "@/app/articles/mobile-style-article-page";
 import ResponsiveCanvas from "@/components/responsive-canvas";
+import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
 
 const features = [
@@ -169,6 +171,48 @@ export default function DongDuongArticlePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#F6F6F6] text-[#0A0A0A]">
       <SiteHeader />
+      <div className="xl:hidden">
+        <MobileStyleArticlePage
+          active="dong-duong"
+          badge="PHONG CÁCH ĐÔNG DƯƠNG"
+          introTitle={
+            <>
+              Cổ Điển, Lãng Mạn,
+              <br />
+              Sang Trọng.
+            </>
+          }
+          intro={
+            <>
+              <p>
+                Phong cách <strong>Đông Dương</strong> là bản giao hưởng hoàn hảo giữa nét mộc mạc của truyền thống Á Đông và vẻ đẹp lãng mạn, tinh tế đến từ kiến trúc Pháp. Điểm nhấn cuốn hút nhất của không gian này nằm ở việc ứng dụng khéo léo các vật liệu tự nhiên đậm chất bản địa như gỗ, mây, tre đan cùng gạch bông lát nền mang đậm dấu ấn thời gian. Với những gam màu nhiệt đới ấm áp như vàng nhạt hay xanh lá, Indochine kiến tạo nên một không gian sang trọng, thư thái.
+              </p>
+              <p>
+                Bảng màu nội thất Đông Dương mang đậm nét hoài cổ và hơi thở nhiệt đới. Không gian ưu tiên tông nền vàng nhạt, trắng kem. Điểm nhấn nổi bật đến từ sắc xanh ngọc, đỏ gạch và nâu gỗ trầm, tạo nên không gian vô cùng tinh tế, ấm cúng.
+              </p>
+            </>
+          }
+          features={features}
+          tags={tags}
+          heroImage="/images/article-dong-duong-hero.png"
+          heroAlt="Không gian Đông Dương"
+          stats={[
+            ["100+", "Dự án TCD"],
+            ["90%", "Hài lòng"],
+            ["6+", "Năm KN"],
+          ]}
+          gallery={spaces.map((space) => ({
+            title: space.title,
+            label: space.label,
+            image: space.image,
+            alt: space.title,
+          }))}
+          ctaLabel="Xem toàn bộ dự án Đông Dương"
+          productHref="/products/dong-duong"
+        />
+        <SiteFooter />
+      </div>
+      <div className="hidden xl:block">
       <ResponsiveCanvas designHeight={2779}>
       <div className="relative mx-auto w-[1440px] bg-[#F6F6F6]">
         {/* SECTION 1: dùng flow, CTA không dùng absolute => không thể dính tag */}
@@ -252,6 +296,7 @@ export default function DongDuongArticlePage() {
         </footer>
       </div>
       </ResponsiveCanvas>
+      </div>
     </main>
   );
 }

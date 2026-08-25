@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 const contactItems = [
   ["Công ty", "HKV Interior"],
-  ["Email", "Đang cập nhật"],
-  ["Hotline", "Đang cập nhật"],
+  ["Email", "hkvinterior@gmail.com"],
+  ["Hotline", "0936986668"],
   ["Theo dõi HKV", "Instagram - Facebook"],
 ];
 
@@ -67,7 +67,15 @@ export default function ContactPage() {
             {contactItems.map(([label, value]) => (
               <div key={label} className="grid gap-2 py-4 sm:grid-cols-[130px_1fr]">
                 <dt className="text-sm text-[#77776f]">{label}</dt>
-                <dd className="text-sm font-medium text-[#171717]">{value}</dd>
+                <dd className="text-sm font-medium text-[#171717]">
+                  {label === "Email" ? (
+                    <a href={`mailto:${value}`}>{value}</a>
+                  ) : label === "Hotline" ? (
+                    <a href={`tel:${value}`}>{value}</a>
+                  ) : (
+                    value
+                  )}
+                </dd>
               </div>
             ))}
           </dl>

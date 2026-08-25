@@ -23,6 +23,8 @@ const drawerItems = [
   { label: "TÌM CỬA HÀNG >>", href: "/contact", accent: true, hideArrow: true },
   { label: "Giảm giá đặc biệt", href: "/#discounted-products" },
   { label: "Bộ sưu tập", href: "/#bo-suu-tap" },
+  { label: "Về HKV", href: "/about" },
+  { label: "Liên hệ", href: "/contact" },
 ];
 
 function prefersReducedMotion() {
@@ -309,7 +311,9 @@ export default function SiteHeader({
                 href={item.href}
                 onClick={closeMenu}
                 className={`flex min-h-11 cursor-pointer items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65] ${
-                  item.accent ? "font-medium text-[#b42318] hover:text-[#6b7d65]" : ""
+                  item.accent
+  ? "font-medium !text-[#b42318] hover:!text-[#b42318]"
+  : "text-neutral-900 hover:text-[#6b7d65]"
                 }`}
               >
                 {hydrationSafeText(item.label)}
@@ -319,14 +323,6 @@ export default function SiteHeader({
           </nav>
 
           <LanguageToggleButton className="flex min-h-11 w-full cursor-pointer items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65]" />
-
-          <Link
-            href={isLoggedIn ? "/account" : "/login"}
-            onClick={closeMenu}
-            className="mt-4 flex h-11 items-center justify-center rounded-full bg-[#6b7d65] text-sm text-white sm:hidden"
-          >
-            {hydrationSafeText(accountLabel)}
-          </Link>
         </aside>
       )}
     </header>

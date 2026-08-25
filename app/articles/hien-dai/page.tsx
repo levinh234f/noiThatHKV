@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import MobileStyleArticlePage from "@/app/articles/mobile-style-article-page";
 import ResponsiveCanvas from "@/components/responsive-canvas";
+import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
 
 const features = [
@@ -171,6 +173,79 @@ export default function HienDaiArticlePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#F6F6F6] text-[#0A0A0A]">
       <SiteHeader />
+      <div className="xl:hidden">
+        <MobileStyleArticlePage
+          active="hien-dai"
+          badge="PHONG CÁCH HIỆN ĐẠI"
+          introTitle={
+            <>
+              Vẻ đẹp phóng khoáng,
+              <br />
+              tối ưu từng không gian sống
+            </>
+          }
+          intro={
+            <>
+              <p>
+                Phong cách Hiện đại là sự tôn vinh vẻ đẹp của sự tối giản, tập trung tối đa vào công năng sử dụng và giải phóng không gian. Bắt nguồn từ cuộc cách mạng kiến trúc đầu thế kỷ 20, phong cách này từ bỏ hoàn toàn các chi tiết trang trí rườm rà hay hoa văn phức tạp. Thay vào đó, nó thiết lập một ngôn ngữ thiết kế mới mẻ bằng những đường thẳng dứt khoát, hình khối mạnh mẽ, và sự kết hợp của các vật liệu công nghiệp mộc mạc nhưng sắc nét — như kính, thép, bê tông và gỗ.
+              </p>
+              <p>
+                Bảng màu chủ đạo thường xoay quanh các tông màu trung tính như trắng, xám, đen và be, đôi khi được điểm xuyết bởi những gam màu nguyên bản để tạo sự tương phản và chiều sâu, mang lại một không gian thanh lịch, thoáng đãng nhưng không kém phần cá tính. Đây là lựa chọn hoàn hảo cho những ai yêu thích sự ngăn nắp, muốn ngôi nhà của mình toát lên vẻ đẹp tinh tế, tiện nghi và mang đậm nhịp thở năng động của thời đại mới.
+              </p>
+            </>
+          }
+          features={features}
+          tags={tags}
+          heroImage="/images/article-hien-dai-hero.png"
+          heroAlt="Không gian nội thất Hiện Đại"
+          stats={[
+            ["100+", "Dự án TCD"],
+            ["98%", "Hài lòng"],
+            ["8+", "Năm KN"],
+          ]}
+          gallery={[
+            {
+              title: "Phòng khách Hiện Đại",
+              label: "Phòng Khách",
+              image: "/images/article-hien-dai-living-room.png",
+              alt: "Phòng khách Hiện Đại",
+              description: "Chandelier vàng · Sofa chạm khắc · Ốp tường phào chỉ",
+            },
+            {
+              title: "Phòng ngủ Master",
+              label: "Phòng Ngủ",
+              image: "/images/article-hien-dai-bedroom.png",
+              alt: "Phòng ngủ Master",
+              description: "Giường tufted · Ốp tường vàng",
+            },
+            {
+              title: "Phòng ăn Hiện Đại",
+              label: "Phòng Ăn",
+              image: "/images/article-hien-dai-dining-room.png",
+              alt: "Phòng ăn Hiện Đại",
+              description: "Bàn tròn · Chandelier pha lê",
+            },
+            {
+              title: "Bếp Tân Hiện Đại",
+              label: "Nhà Bếp",
+              image: "/images/article-hien-dai-kitchen.png",
+              alt: "Bếp Hiện Đại",
+              description: "Tủ bếp cổ điển · Đảo bếp",
+            },
+            {
+              title: "Phòng tắm Luxury",
+              label: "Phòng Tắm",
+              image: "/images/article-hien-dai-bathroom.png",
+              alt: "Phòng tắm Luxury",
+              description: "Bồn tắm · Gương mạ vàng",
+            },
+          ]}
+          ctaLabel="Xem toàn bộ dự án Hiện Đại"
+          productHref="/products/hien-dai"
+        />
+        <SiteFooter />
+      </div>
+      <div className="hidden xl:block">
       <ResponsiveCanvas designHeight={2779}>
       <div className="relative mx-auto h-[2779px] w-[1440px] bg-[#F6F6F6]">
         <section className="absolute left-[131px] top-[87px] h-[1115px] w-[1177px] px-[24px] pt-[21px]">
@@ -487,6 +562,7 @@ export default function HienDaiArticlePage() {
         </footer>
       </div>
       </ResponsiveCanvas>
+      </div>
     </main>
   );
 }
