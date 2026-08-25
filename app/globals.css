@@ -45,12 +45,103 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+button:not(:disabled):not([aria-disabled="true"]),
+a[href],
+summary,
+select:not(:disabled),
+label[for],
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled),
+input[type="file"]:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+button[aria-disabled="true"],
+select:disabled,
+input:disabled,
+textarea:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 ::selection {
   background: #6b7d65;
   color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .motion-hero-zoom {
+    animation: hkv-hero-zoom-out 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .motion-reveal {
+    transition-delay: var(--motion-delay, 0ms);
+    will-change: opacity, transform, clip-path;
+  }
+
+  .motion-reveal[data-motion-variant="fade-up"] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .motion-reveal[data-motion-variant="image-mask"] {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.98;
+    transform: translate3d(0, 12px, 0) scale(1.015);
+    transition:
+      clip-path 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 600ms ease,
+      transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .motion-reveal[data-motion-variant="parallax"] {
+    opacity: 0.98;
+    transform: translate3d(0, 14px, 0) scale(1.025);
+    transition:
+      opacity 700ms ease,
+      transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .motion-reveal[data-motion-visible="true"] {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    will-change: auto;
+  }
+
+  .motion-nav-link {
+    position: relative;
+  }
+
+  .motion-nav-link::after {
+    position: absolute;
+    right: 12px;
+    bottom: 6px;
+    left: 12px;
+    height: 1px;
+    content: "";
+    background: currentColor;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition:
+      opacity 220ms ease,
+      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .motion-nav-link:hover::after,
+  .motion-nav-link:focus-visible::after {
+    opacity: 0.46;
+    transform: scaleX(1);
+  }
+
   button:not(:disabled):not([aria-disabled="true"]),
   a[href][class*="rounded"],
   a[href][class*="bg-[#6B7D65]"],
@@ -58,7 +149,7 @@ a {
   a[href][class*="border-[#6B7D65]"],
   a[href][class*="border-[#6b7d65]"] {
     transition-duration: 240ms !important;
-    transition-property: transform, box-shadow, background-color, border-color, color, opacity !important;
+    transition-property: transform, background-color, border-color, color, opacity !important;
     transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1) !important;
   }
 
@@ -78,7 +169,6 @@ a {
   a[href][class*="bg-[#6b7d65]"]:active,
   a[href][class*="border-[#6B7D65]"]:active,
   a[href][class*="border-[#6b7d65]"]:active {
-    box-shadow: 0 5px 14px rgba(32, 42, 29, 0.08);
     transform: translateY(0) scale(0.98);
   }
 
@@ -113,13 +203,42 @@ a {
   }
 }
 
+@keyframes hkv-hero-zoom-out {
+  from {
+    transform: scale(1.035);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .motion-reveal[data-motion-variant="parallax"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 button:disabled,
 button[aria-disabled="true"] {
   box-shadow: none !important;
+  cursor: not-allowed;
   transform: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .motion-hero-zoom,
+  .motion-reveal,
+  .motion-nav-link::after {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
   button,
   a[href][class*="rounded"],
   a[href][class*="bg-[#6B7D65]"],

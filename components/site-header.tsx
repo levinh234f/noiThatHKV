@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CartButton from "@/components/cart-button";
 import { LanguageToggleButton } from "@/components/site-translator";
@@ -11,21 +11,23 @@ const menuItems = [
   { label: "Phong cách", href: "/#phong-cach" },
   { label: "Sản phẩm", href: "/products" },
   { label: "Bộ sưu tập", href: "/#bo-suu-tap" },
-  { label: "Về HKV", href: "/#footer" },
-  { label: "Liên hệ", href: "/#footer" },
+  { label: "Về HKV", href: "/about" },
+  { label: "Liên hệ", href: "/contact" },
 ];
 
 const drawerItems = [
   { label: "Sản phẩm mới", href: "/products" },
-  { label: "Sofa và Armchair", href: "/products?type=Sofa" },
-  { label: "Bàn", href: "/products?type=Bàn" },
-  { label: "Ghế", href: "/products?type=Ghế" },
-  { label: "Giường ngủ", href: "/products?type=Giường" },
-  { label: "Tủ và Kệ", href: "/products?type=Tủ%20%26%20Kệ" },
-  { label: "Giảm giá đặc biệt", href: "/products?sale=1" },
-  { label: "Thiết kế nội thất", href: "/#phong-cach" },
-  { label: "Tìm cửa hàng", href: "/#footer", accent: true },
+  { label: "Phong Cách Hiện Đại", href: "/products/hien-dai" },
+  { label: "Phong Cách Tân Cổ Điển", href: "/products/tan-co-dien" },
+  { label: "Phong Cách Đông Dương", href: "/products/dong-duong" },
+  { label: "TÌM CỬA HÀNG >>", href: "/contact", accent: true, hideArrow: true },
+  { label: "Giảm giá đặc biệt", href: "/#discounted-products" },
+  { label: "Bộ sưu tập", href: "/#bo-suu-tap" },
 ];
+
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 export default function SiteHeader({
   overlayHeroId,
@@ -34,6 +36,7 @@ export default function SiteHeader({
 }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuMounted, setIsMenuMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [query, setQuery] = useState("");
   const [isHeroVisible, setIsHeroVisible] = useState(Boolean(overlayHeroId));
@@ -56,16 +59,51 @@ export default function SiteHeader({
     return () => subscription.unsubscribe();
   }, []);
 
+  const openMenu = useCallback(() => {
+    setIsMenuMounted(true);
+
+    if (prefersReducedMotion()) {
+      setIsMenuOpen(true);
+      return;
+    }
+
+    window.requestAnimationFrame(() => setIsMenuOpen(true));
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+    if (prefersReducedMotion()) setIsMenuMounted(false);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    if (isMenuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }, [closeMenu, isMenuOpen, openMenu]);
+
   useEffect(() => {
     if (!isMenuOpen) return;
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsMenuOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
 
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [isMenuOpen]);
+  }, [closeMenu, isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuMounted) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuMounted]);
 
   useEffect(() => {
     if (!overlayHeroId) return;
@@ -86,12 +124,12 @@ export default function SiteHeader({
     event.preventDefault();
     const value = query.trim();
     router.push(value ? `/products?q=${encodeURIComponent(value)}` : "/products");
-    setIsMenuOpen(false);
+    closeMenu();
   }
 
   return (
     <header
-      className={`z-50 w-full transition-[background-color,border-color,box-shadow,color] duration-300 ease-out ${
+      className={`z-50 w-full transition-[background-color,border-color,color] duration-300 ease-out ${
         isHomeOverlay ? "fixed left-0 right-0 top-0" : "relative"
       } ${
         isTransparent
@@ -105,7 +143,7 @@ export default function SiteHeader({
             type="button"
             aria-label={isMenuOpen ? "Đóng menu" : "Mở menu"}
             aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((open) => !open)}
+            onClick={toggleMenu}
             className={`flex size-10 shrink-0 items-center justify-center rounded-full transition-colors ${
               isTransparent ? "hover:bg-white/15" : "hover:bg-[#f3f3f1]"
             }`}
@@ -134,7 +172,7 @@ export default function SiteHeader({
               <Link
                 key={item.label}
                 href={item.href}
-                className={`rounded-lg px-3 py-2 text-[18px] whitespace-nowrap transition-colors 2xl:text-[20px] ${
+                className={`motion-nav-link rounded-lg px-3 py-2 text-[18px] whitespace-nowrap transition-colors 2xl:text-[20px] ${
                   isTransparent ? "hover:bg-white/15" : "hover:bg-[#f3f3f1]"
                 }`}
               >
@@ -212,49 +250,59 @@ export default function SiteHeader({
         </button>
       </form>
 
-      {isMenuOpen && (
+      {isMenuMounted && (
         <button
           type="button"
           aria-label="Đóng menu"
-          onClick={() => setIsMenuOpen(false)}
-          className="fixed inset-0 top-[110px] z-40 bg-black/20 backdrop-blur-[1px] lg:top-[90px]"
+          onClick={closeMenu}
+          className={`fixed inset-0 top-[110px] z-40 bg-black/20 backdrop-blur-[1px] transition-opacity duration-[240ms] motion-reduce:transition-none lg:top-[90px] ${
+            isMenuOpen
+              ? "pointer-events-auto opacity-100 ease-out"
+              : "pointer-events-none opacity-0 ease-in"
+          }`}
         />
       )}
 
-      <aside
-        aria-hidden={!isMenuOpen}
-        className={`absolute left-0 top-full z-50 w-full max-w-[390px] bg-white px-4 py-4 text-neutral-900 shadow-2xl transition-all duration-200 sm:left-6 sm:rounded-b-2xl ${
-          isMenuOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-2 opacity-0"
-        }`}
-      >
-        <nav className="grid" aria-label="Danh mục sản phẩm">
-          {drawerItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={() => setIsMenuOpen(false)}
-              className={`flex min-h-11 items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65] ${
-                item.accent ? "font-medium text-[#b42318] hover:text-[#6b7d65]" : ""
-              }`}
-            >
-              {item.label}
-              <span aria-hidden="true">→</span>
-            </Link>
-          ))}
-        </nav>
-
-        <LanguageToggleButton className="flex min-h-11 w-full items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65]" />
-
-        <Link
-          href={isLoggedIn ? "/account" : "/login"}
-          onClick={() => setIsMenuOpen(false)}
-          className="mt-4 flex h-11 items-center justify-center rounded-full bg-[#6b7d65] text-sm text-white sm:hidden"
+      {isMenuMounted && (
+        <aside
+          aria-hidden={!isMenuOpen}
+          onTransitionEnd={(event) => {
+            if (event.currentTarget !== event.target || event.propertyName !== "transform") return;
+            if (!isMenuOpen) setIsMenuMounted(false);
+          }}
+          className={`absolute left-0 top-full z-50 w-full max-w-[390px] bg-white px-4 py-4 text-neutral-900 shadow-2xl transition-[transform,opacity] duration-[260ms] motion-reduce:transition-none sm:left-6 sm:rounded-b-2xl ${
+            isMenuOpen
+              ? "pointer-events-auto translate-x-0 opacity-100 ease-out"
+              : "pointer-events-none -translate-x-full opacity-0 ease-in"
+          }`}
         >
-          {isLoggedIn ? "TÀI KHOẢN" : "ĐĂNG NHẬP"}
-        </Link>
-      </aside>
+          <nav className="grid" aria-label="Danh mục sản phẩm">
+            {drawerItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeMenu}
+                className={`flex min-h-11 cursor-pointer items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65] ${
+                  item.accent ? "font-medium text-[#b42318] hover:text-[#6b7d65]" : ""
+                }`}
+              >
+                {item.label}
+                {!item.hideArrow && <span aria-hidden="true">→</span>}
+              </Link>
+            ))}
+          </nav>
+
+          <LanguageToggleButton className="flex min-h-11 w-full cursor-pointer items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65]" />
+
+          <Link
+            href={isLoggedIn ? "/account" : "/login"}
+            onClick={closeMenu}
+            className="mt-4 flex h-11 items-center justify-center rounded-full bg-[#6b7d65] text-sm text-white sm:hidden"
+          >
+            {isLoggedIn ? "TÀI KHOẢN" : "ĐĂNG NHẬP"}
+          </Link>
+        </aside>
+      )}
     </header>
   );
 }

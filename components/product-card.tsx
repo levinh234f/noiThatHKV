@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: ProductCardData }) {
   const content = (
     <>
       <div className="relative aspect-[4/3] overflow-hidden rounded-t-[15px] bg-[#ebeae6]">
-        <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]" />
+        <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         <span className="absolute right-3 top-3 flex size-8 items-center justify-center rounded-full bg-white/85 text-lg text-[#6b7d65] shadow-sm" aria-hidden="true">♡</span>
       </div>
       <div className="min-h-[132px] p-4 pr-12">
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: { product: ProductCardData }) {
   );
 
   return (
-    <article className="group relative overflow-hidden rounded-[15px] bg-white shadow-[0_8px_28px_rgba(20,24,20,0.06)] transition-transform duration-300 hover:-translate-y-1">
+    <article className="group relative overflow-hidden rounded-[15px] bg-white shadow-[0_8px_28px_rgba(20,24,20,0.06)] transition-transform duration-300 hover:-translate-y-0.5">
       {product.slug ? <Link href={`/products/${product.slug}`} className="block">{content}</Link> : content}
       {product.id !== undefined && product.slug && (
         <QuickAddToCartButton
