@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import CartButton from "@/components/cart-button";
 import { LanguageToggleButton } from "@/components/site-translator";
@@ -39,10 +39,22 @@ export default function SiteHeader({
   const [isMenuMounted, setIsMenuMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [query, setQuery] = useState("");
+  const isHydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   const [isHeroVisible, setIsHeroVisible] = useState(Boolean(overlayHeroId));
   const isHomeOverlay = Boolean(overlayHeroId);
   const isTransparent = isHomeOverlay && isHeroVisible;
-
+  const menuButtonLabel = isMenuOpen ? "Đóng menu" : "Mở menu";
+  const accountLabel = isLoggedIn ? "TÀI KHOẢN" : "ĐĂNG NHẬP";
+  const hydrationSafeText = (label: string) =>
+    isHydrated ? (
+      label
+    ) : (
+      <span aria-hidden="true" className="before:content-[attr(data-label)]" data-label={label} />
+    );
   useEffect(() => {
     const supabase = createClient();
 
@@ -141,7 +153,7 @@ export default function SiteHeader({
         <div className="flex min-w-0 items-center gap-2">
           <button
             type="button"
-            aria-label={isMenuOpen ? "Đóng menu" : "Mở menu"}
+            aria-label={isHydrated ? menuButtonLabel : undefined}
             aria-expanded={isMenuOpen}
             onClick={toggleMenu}
             className={`flex size-10 shrink-0 items-center justify-center rounded-full transition-colors ${
@@ -157,7 +169,7 @@ export default function SiteHeader({
             />
           </button>
 
-          <Link href="/" aria-label="Trang chủ HKV" className="shrink-0">
+          <Link href="/" aria-label={isHydrated ? "Trang chủ HKV" : undefined} className="shrink-0">
             <img
               src="/images/logo-hkv.png"
               alt="HKV"
@@ -167,7 +179,7 @@ export default function SiteHeader({
             />
           </Link>
 
-          <nav className="ml-1 hidden items-center gap-1 xl:flex" aria-label="Điều hướng chính">
+          <nav className="ml-1 hidden items-center gap-1 xl:flex" aria-label={isHydrated ? "Điều hướng chính" : undefined}>
             {menuItems.map((item) => (
               <Link
                 key={item.label}
@@ -176,7 +188,7 @@ export default function SiteHeader({
                   isTransparent ? "hover:bg-white/15" : "hover:bg-[#f3f3f1]"
                 }`}
               >
-                {item.label}
+                {hydrationSafeText(item.label)}
               </Link>
             ))}
           </nav>
@@ -193,13 +205,13 @@ export default function SiteHeader({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               type="search"
-              aria-label="Tìm sản phẩm"
-              placeholder="Tìm sản phẩm"
+              aria-label={isHydrated ? "Tìm sản phẩm" : undefined}
+              placeholder={isHydrated ? "Tìm sản phẩm" : undefined}
               className={`min-w-0 flex-1 bg-transparent text-xs outline-none placeholder:transition-colors ${
                 isTransparent ? "text-white placeholder:text-white/85" : "text-[#111] placeholder:text-black/50"
               }`}
             />
-            <button type="submit" aria-label="Tìm kiếm" className="flex size-8 items-center justify-center">
+            <button type="submit" aria-label={isHydrated ? "Tìm kiếm" : undefined} className="flex size-8 items-center justify-center">
               <img
                 src="/images/products-search.svg"
                 alt=""
@@ -220,7 +232,7 @@ export default function SiteHeader({
             href={isLoggedIn ? "/account" : "/login"}
             className="hidden h-[43px] items-center justify-center rounded-full bg-[#6b7d65] px-5 text-sm text-white transition-colors hover:bg-[#586a53] sm:flex"
           >
-            {isLoggedIn ? "TÀI KHOẢN" : "ĐĂNG NHẬP"}
+            {hydrationSafeText(accountLabel)}
           </Link>
         </div>
       </div>
@@ -235,13 +247,13 @@ export default function SiteHeader({
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           type="search"
-          aria-label="Tìm sản phẩm"
-          placeholder="Tìm sản phẩm"
+          aria-label={isHydrated ? "Tìm sản phẩm" : undefined}
+          placeholder={isHydrated ? "Tìm sản phẩm" : undefined}
           className={`min-w-0 flex-1 bg-transparent text-xs outline-none placeholder:transition-colors ${
             isTransparent ? "text-white placeholder:text-white/85" : "text-[#111] placeholder:text-black/50"
           }`}
         />
-        <button type="submit" aria-label="Tìm kiếm" className="flex size-9 items-center justify-center">
+        <button type="submit" aria-label={isHydrated ? "Tìm kiếm" : undefined} className="flex size-9 items-center justify-center">
           <img
             src="/images/products-search.svg"
             alt=""
@@ -286,7 +298,7 @@ export default function SiteHeader({
                   item.accent ? "font-medium text-[#b42318] hover:text-[#6b7d65]" : ""
                 }`}
               >
-                {item.label}
+                {hydrationSafeText(item.label)}
                 {!item.hideArrow && <span aria-hidden="true">→</span>}
               </Link>
             ))}
@@ -299,7 +311,7 @@ export default function SiteHeader({
             onClick={closeMenu}
             className="mt-4 flex h-11 items-center justify-center rounded-full bg-[#6b7d65] text-sm text-white sm:hidden"
           >
-            {isLoggedIn ? "TÀI KHOẢN" : "ĐĂNG NHẬP"}
+            {hydrationSafeText(accountLabel)}
           </Link>
         </aside>
       )}

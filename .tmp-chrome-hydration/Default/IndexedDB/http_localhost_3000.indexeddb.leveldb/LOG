@@ -1,0 +1,7 @@
+2026/08/25-21:59:21.237 754 Reusing MANIFEST C:\Users\GIGABYTE\noi-that-web\.tmp-chrome-hydration\Default\IndexedDB\http_localhost_3000.indexeddb.leveldb/MANIFEST-000001
+2026/08/25-21:59:21.237 754 Recovering log #3
+2026/08/25-21:59:21.237 754 Reusing old log C:\Users\GIGABYTE\noi-that-web\.tmp-chrome-hydration\Default\IndexedDB\http_localhost_3000.indexeddb.leveldb/000003.log 
+2026/08/25-21:59:23.244 4f1c Level-0 table #5: started
+2026/08/25-21:59:23.249 4f1c Level-0 table #5: 22046 bytes OK
+2026/08/25-21:59:23.252 4f1c Delete type=0 #3
+2026/08/25-21:59:23.253 4f1c Manual compaction at level-0 from (begin) .. (end); will stop at (end)

@@ -29,19 +29,19 @@ const styles = [
   {
     name: "Đông Dương",
     text: "Ấm áp, hoài cổ và giàu bản sắc Á Đông trong tinh thần đương đại.",
-    image: "/images/style-indochine.png",
+    image: "/images/phong-cach-indochine.png",
     href: "/products/dong-duong",
   },
   {
     name: "Hiện Đại",
     text: "Tối giản, thoáng đãng và tập trung vào công năng tinh gọn.",
-    image: "/images/style-modern.png",
+    image: "/images/phong-cach-hien-dai.png",
     href: "/products/hien-dai",
   },
   {
     name: "Tân Cổ Điển",
     text: "Cân đối, sang trọng và tinh xảo trong từng chi tiết hoàn thiện.",
-    image: "/images/style-neoclassical.png",
+    image: "/images/phong-cach-neo-classical.png",
     href: "/products/tan-co-dien",
   },
 ];
