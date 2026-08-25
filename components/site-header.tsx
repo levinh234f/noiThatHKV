@@ -15,7 +15,7 @@ const menuItems = [
   { label: "Liên hệ", href: "/contact" },
 ];
 
-const drawerItems = [
+const drawerItems: Array<{ label: string; href: string; accent?: boolean; hideArrow?: boolean }> = [
   { label: "Sản phẩm mới", href: "/products" },
   { label: "Phong Cách Hiện Đại", href: "/products/hien-dai" },
   { label: "Phong Cách Tân Cổ Điển", href: "/products/tan-co-dien" },
@@ -322,6 +322,14 @@ export default function SiteHeader({
           </nav>
 
           <LanguageToggleButton className="flex min-h-11 w-full cursor-pointer items-center justify-between border-b border-neutral-200 px-3 text-sm text-neutral-900 transition-colors hover:bg-[#eef2ec] hover:text-[#6b7d65]" />
+
+          <Link
+            href={isLoggedIn ? "/account" : "/login"}
+            onClick={closeMenu}
+            className="mt-4 flex h-11 items-center justify-center rounded-full bg-[#6b7d65] text-sm text-white sm:hidden"
+          >
+            {hydrationSafeText(accountLabel)}
+          </Link>
         </aside>
       )}
     </header>
