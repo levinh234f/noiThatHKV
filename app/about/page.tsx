@@ -242,13 +242,13 @@ export default function AboutPage() {
               </Link>
             </div>
           </div>
-          <Reveal variant="image-mask" className="relative min-h-[260px] lg:min-h-full">
+          <Reveal variant="parallax" className="relative min-h-[260px] overflow-hidden lg:min-h-full">
             <Image
               src="/images/phong-cach-indochine.png"
               alt="Không gian Đông Dương"
               fill
               sizes="(min-width: 1024px) 480px, 100vw"
-              className="object-cover"
+              className="motion-parallax-target object-cover"
             />
           </Reveal>
         </Reveal>

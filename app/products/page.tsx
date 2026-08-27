@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import ProductCard, { type ProductCardData } from "@/components/product-card";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
+import { Reveal } from "@/components/motion";
 import { createClient } from "@/lib/supabase/client";
 import { getProductImage } from "@/lib/product-images";
 
@@ -126,23 +127,29 @@ function ProductsContent() {
       <SiteHeader />
       <section className="mx-auto max-w-[1176px] px-4 pt-5 sm:px-6 lg:pt-7 xl:px-0">
         <div className="relative h-[220px] overflow-hidden rounded-[21px] sm:h-[280px] lg:h-[320px]">
-          <img src="/images/products-hero.png" alt="Không gian nội thất HKV" className="h-full w-full object-cover" />
+          <img src="/images/products-hero.png" alt="Không gian nội thất HKV" className="motion-hero-zoom h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/35 to-transparent" />
           <div className="absolute bottom-7 left-6 text-white sm:bottom-10 sm:left-10">
-            <p className="text-xs uppercase tracking-[0.22em]">HKV Interior</p>
-            <h1 className="mt-2 text-3xl font-medium sm:text-4xl">Không gian sống tinh tế</h1>
+            <Reveal delay={80}>
+              <p className="text-xs uppercase tracking-[0.22em]">HKV Interior</p>
+            </Reveal>
+            <Reveal delay={150}>
+              <h1 className="mt-2 text-3xl font-medium sm:text-4xl">Không gian sống tinh tế</h1>
+            </Reveal>
           </div>
         </div>
 
         <section className="mt-7">
-          <div className="flex items-end justify-between gap-4"><h2 className="text-lg font-medium">Bạn đang tìm sản phẩm gì?</h2><Link href="#danh-sach" className="text-xs text-[#5e7259]">Xem sản phẩm ↓</Link></div>
+          <Reveal>
+            <div className="flex items-end justify-between gap-4"><h2 className="text-lg font-medium">Bạn đang tìm sản phẩm gì?</h2><Link href="#danh-sach" className="text-xs text-[#5e7259]">Xem sản phẩm ↓</Link></div>
+          </Reveal>
           <div className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-8 sm:gap-4">
             {categories.map(([name, image]) => <button key={name} type="button" onClick={() => { if (productTypes.includes(name as ProductType)) setSelectedType(name as ProductType); setPage(1); }} className="group overflow-hidden rounded-[15px] border border-[#ddd] bg-white p-1.5"><img src={image} alt="" className="mx-auto aspect-square w-full object-contain transition-transform group-hover:scale-105" /><span className="block pb-1 text-[10px] sm:text-xs">{name}</span></button>)}
           </div>
         </section>
 
         <section className="mt-8 grid gap-3 md:grid-cols-3">
-          {styles.map((style) => <Link key={style.name} href={style.href} className="group relative min-h-[150px] overflow-hidden rounded-[15px] text-white"><img src={style.image} alt={style.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-black/25" /><div className="relative flex min-h-[150px] flex-col justify-end p-5"><h2 className="text-xl font-medium">{style.name}</h2><p className="mt-1 text-sm text-white/85">{style.text}</p></div></Link>)}
+          {styles.map((style, index) => <Reveal key={style.name} variant="parallax" delay={index * 60}><Link href={style.href} className="group relative block min-h-[150px] overflow-hidden rounded-[15px] text-white"><img src={style.image} alt={style.name} className="motion-parallax-target absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-black/25" /><div className="relative flex min-h-[150px] flex-col justify-end p-5"><h2 className="text-xl font-medium">{style.name}</h2><p className="mt-1 text-sm text-white/85">{style.text}</p></div></Link></Reveal>)}
         </section>
       </section>
 

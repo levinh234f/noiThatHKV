@@ -5,6 +5,7 @@
   --foreground: #171717;
   --primary: #6b7d65;
   --surface: #f6f6f6;
+  --hkv-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -73,46 +74,44 @@ textarea:disabled,
 
 @media (prefers-reduced-motion: no-preference) {
   .motion-hero-zoom {
-    animation: hkv-hero-zoom-out 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hkv-hero-zoom-out 780ms var(--hkv-motion-ease) both;
     transform-origin: center;
     will-change: transform;
   }
 
   .motion-reveal {
     transition-delay: var(--motion-delay, 0ms);
-    will-change: opacity, transform, clip-path;
   }
 
-  .motion-reveal[data-motion-variant="fade-up"] {
+  .motion-reveal[data-motion-ready="true"][data-motion-visible="false"][data-motion-variant="fade-up"] {
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
-    transition:
-      opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate3d(0, 16px, 0);
+    will-change: opacity, transform;
   }
 
-  .motion-reveal[data-motion-variant="image-mask"] {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0.98;
-    transform: translate3d(0, 12px, 0) scale(1.015);
+  .motion-reveal[data-motion-ready="true"][data-motion-variant="fade-up"] {
     transition:
-      clip-path 900ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 600ms ease,
-      transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 680ms var(--hkv-motion-ease),
+      transform 680ms var(--hkv-motion-ease);
   }
 
   .motion-reveal[data-motion-variant="parallax"] {
-    opacity: 0.98;
-    transform: translate3d(0, 14px, 0) scale(1.025);
-    transition:
-      opacity 700ms ease,
-      transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+    --motion-parallax-y: 0px;
   }
 
-  .motion-reveal[data-motion-visible="true"] {
-    clip-path: inset(0 0 0 0);
+  .motion-parallax-target {
+    transform: translate3d(0, var(--motion-parallax-y, 0px), 0) scale(1.025);
+    transition: transform 700ms var(--hkv-motion-ease);
+    will-change: transform;
+  }
+
+  .group:hover .motion-parallax-target {
+    transform: translate3d(0, var(--motion-parallax-y, 0px), 0) scale(1.035);
+  }
+
+  .motion-reveal[data-motion-ready="true"][data-motion-visible="true"] {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
     will-change: auto;
   }
 
@@ -132,8 +131,8 @@ textarea:disabled,
     transform: scaleX(0);
     transform-origin: center;
     transition:
-      opacity 220ms ease,
-      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      opacity 260ms ease,
+      transform 260ms var(--hkv-motion-ease);
   }
 
   .motion-nav-link:hover::after,
@@ -150,7 +149,7 @@ textarea:disabled,
   a[href][class*="border-[#6b7d65]"] {
     transition-duration: 240ms !important;
     transition-property: transform, background-color, border-color, color, opacity !important;
-    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    transition-timing-function: var(--hkv-motion-ease) !important;
   }
 
   button:not(:disabled):not([aria-disabled="true"]):hover,
@@ -219,6 +218,26 @@ textarea:disabled,
     transform: none !important;
     transition: none !important;
   }
+
+  .motion-parallax-target {
+    transform: none !important;
+    transition-duration: 420ms !important;
+    will-change: auto !important;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .motion-hero-zoom {
+    animation-duration: 560ms;
+  }
+
+  .motion-reveal[data-motion-ready="true"][data-motion-visible="false"][data-motion-variant="fade-up"] {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  .motion-reveal[data-motion-ready="true"][data-motion-variant="fade-up"] {
+    transition-duration: 520ms;
+  }
 }
 
 button:disabled,
@@ -231,6 +250,7 @@ button[aria-disabled="true"] {
 @media (prefers-reduced-motion: reduce) {
   .motion-hero-zoom,
   .motion-reveal,
+  .motion-parallax-target,
   .motion-nav-link::after {
     animation: none !important;
     clip-path: none !important;

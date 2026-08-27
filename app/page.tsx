@@ -66,11 +66,11 @@ export default function Home() {
 
         <section id="phong-cach" className="mt-20 space-y-12 lg:mt-[130px] lg:space-y-[59px]">
           {styles.map((style, index) => (
-            <Reveal key={style.name} delay={index * 90}>
+            <Reveal key={style.name} delay={index * 70}>
               <article className="grid items-center gap-7 lg:grid-cols-2 lg:gap-8">
-              <div className={`group overflow-hidden rounded-[15px] ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                <img src={style.image} alt={style.name} className="h-[260px] w-full object-cover transition duration-500 group-hover:scale-[1.03] sm:h-[320px] lg:h-[286px]" />
-              </div>
+              <Reveal variant="parallax" className={`group overflow-hidden rounded-[15px] ${index % 2 === 1 ? "lg:order-2" : ""}`}>
+                <img src={style.image} alt={style.name} className="motion-parallax-target h-[260px] w-full object-cover transition duration-500 group-hover:scale-[1.03] sm:h-[320px] lg:h-[286px]" />
+              </Reveal>
               <div className={`flex flex-col items-start ${index % 2 === 1 ? "lg:order-1" : ""}`}>
                 <h3 className="text-[25px] font-medium leading-[1.2] sm:text-[30px] lg:text-[33px]">{style.name}</h3>
                 <p className="mt-4 text-sm leading-6 sm:text-base">{style.description}</p>
